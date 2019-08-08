@@ -1,0 +1,6 @@
+﻿CREATE PROC ERP.Usp_Del_Vacacion
+@ID INT
+AS
+BEGIN
+	DELETE FROM ERP.Vacacion WHERE ID = @ID
+END

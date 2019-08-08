@@ -1,0 +1,26 @@
+﻿CREATE TABLE [ERP].[Vehiculo] (
+    [ID]                  INT           IDENTITY (1, 1) NOT NULL,
+    [IdChofer]            INT           NULL,
+    [IdEmpresaTransporte] INT           NULL,
+    [IdTipoDocumento]     INT           NULL,
+    [Color]               VARCHAR (250) NULL,
+    [Marca]               VARCHAR (250) NULL,
+    [Placa]               VARCHAR (250) NULL,
+    [Modelo]              VARCHAR (250) NULL,
+    [Inscripcion]         VARCHAR (250) NULL,
+    [Flag]                BIT           NULL,
+    [FlagBorrador]        BIT           NULL,
+    [UsuarioRegistro]     VARCHAR (250) NULL,
+    [UsuarioModifico]     VARCHAR (250) NULL,
+    [UsuarioElimino]      VARCHAR (250) NULL,
+    [UsuarioActivo]       VARCHAR (250) NULL,
+    [FechaRegistro]       DATETIME      NULL,
+    [FechaModificado]     DATETIME      NULL,
+    [FechaEliminado]      DATETIME      NULL,
+    [FechaActivacion]     DATETIME      NULL,
+    CONSTRAINT [PK__Vehiculo__3214EC2788A00251] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK__Vehiculo__IdChof__71DE6BB7] FOREIGN KEY ([IdChofer]) REFERENCES [ERP].[Chofer] ([ID]),
+    CONSTRAINT [FK__Vehiculo__IdEmpr__72D28FF0] FOREIGN KEY ([IdEmpresaTransporte]) REFERENCES [ERP].[Transporte] ([ID]),
+    CONSTRAINT [FK__Vehiculo__IdTipo__73C6B429] FOREIGN KEY ([IdTipoDocumento]) REFERENCES [PLE].[T2TipoDocumento] ([ID])
+);
+

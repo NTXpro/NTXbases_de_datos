@@ -1,0 +1,13 @@
+﻿
+
+CREATE PROC [ERP].[Usp_Del_LetraCobrar]
+@ID int
+AS
+BEGIN
+	DECLARE @TABLE_CUENTACOBRAR AS TABLE(IdCuentaCobrar INT)
+	INSERT INTO @TABLE_CUENTACOBRAR
+	SELECT IdCuentaCobrar FROM ERP.LetraCobrarCuentaCobrar WHERE IdLetraCobrar = @ID
+	DELETE FROM ERP.LetraCobrarCuentaCobrar WHERE IdLetraCobrar = @ID  
+	DELETE FROM ERP.LetraCobrar WHERE ID = @ID
+	DELETE FROM ERP.CuentaCobrar WHERE ID IN (SELECT IdCuentaCobrar FROM @TABLE_CUENTACOBRAR)
+END

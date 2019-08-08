@@ -1,0 +1,9 @@
+﻿
+CREATE PROC [ERP].[Usp_Del_Vale]
+@ID INT
+AS
+BEGIN
+	DELETE FROM ERP.ValeReferencia WHERE IdVale = @ID
+	DELETE FROM ERP.ValeDetalle WHERE IdVale = @ID
+	DELETE FROM ERP.Vale WHERE ID = @ID
+END

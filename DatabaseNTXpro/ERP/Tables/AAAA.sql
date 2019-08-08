@@ -1,0 +1,5 @@
+﻿CREATE TABLE [ERP].[AAAA] (
+    [CODIGO] VARCHAR (50)   NULL,
+    [VALOR]  VARCHAR (4000) NULL
+);
+

@@ -1,0 +1,7 @@
+﻿CREATE PROC [PLE].[Usp_Del_T12TipoOperacion]
+@ID INT
+AS
+BEGIN
+	DELETE FROM [PLE].[T12TipoOperacion]
+	WHERE ID = @ID
+END

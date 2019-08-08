@@ -1,0 +1,3 @@
+﻿CREATE SCHEMA [Sunat]
+    AUTHORIZATION [dbo];
+

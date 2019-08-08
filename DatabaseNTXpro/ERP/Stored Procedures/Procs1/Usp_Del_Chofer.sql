@@ -1,0 +1,8 @@
+﻿
+
+CREATE PROC [ERP].[Usp_Del_Chofer]
+@ID	INT
+AS
+BEGIN
+		DELETE FROM ERP.Chofer WHERE ID=@ID
+END

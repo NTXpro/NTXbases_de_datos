@@ -1,0 +1,7 @@
+﻿
+CREATE PROC [ERP].[Usp_Del_Banco]
+@IdBanco	INT
+AS
+BEGIN
+		DELETE FROM [PLE].[T3Banco] WHERE ID=@IdBanco
+END

@@ -1,0 +1,12 @@
+﻿
+CREATE PROCEDURE [ERP].[Usp_Upd_Comparador_GenerarOC]
+@ID	 INT
+AS
+BEGIN
+		--SET QUERY_GOVERNOR_COST_LIMIT 36000
+		--SET NOCOUNT ON;
+		
+		UPDATE ERP.Comparador SET FlagGeneroOC = 1 WHERE ID = @ID
+
+		--SET NOCOUNT OFF;
+END

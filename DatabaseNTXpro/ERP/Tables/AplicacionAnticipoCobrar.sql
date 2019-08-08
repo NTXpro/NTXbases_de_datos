@@ -1,0 +1,25 @@
+﻿CREATE TABLE [ERP].[AplicacionAnticipoCobrar] (
+    [ID]                INT             IDENTITY (1, 1) NOT NULL,
+    [IdCuentaCobrar]    INT             NULL,
+    [IdCliente]         INT             NULL,
+    [IdMoneda]          INT             NULL,
+    [IdEmpresa]         INT             NULL,
+    [IdTipoComprobante] INT             NULL,
+    [Documento]         VARCHAR (20)    NULL,
+    [Serie]             VARCHAR (4)     NULL,
+    [Fecha]             DATETIME        NULL,
+    [TipoCambio]        DECIMAL (14, 5) NULL,
+    [Total]             DECIMAL (14, 5) NULL,
+    [FechaRegistro]     DATETIME        NULL,
+    [UsuarioRegistro]   VARCHAR (250)   NULL,
+    [IdAsiento]         INT             NULL,
+    [Flag]              BIT             NULL,
+    [FechaAplicacion]   DATETIME        NULL,
+    CONSTRAINT [PK__Aplicaci__3214EC27E89D3E51] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK__Aplicacio__IdAsi__6EEC251C] FOREIGN KEY ([IdAsiento]) REFERENCES [ERP].[Asiento] ([ID]),
+    CONSTRAINT [FK__Aplicacio__IdCli__6B1B9438] FOREIGN KEY ([IdCliente]) REFERENCES [ERP].[Cliente] ([ID]),
+    CONSTRAINT [FK__Aplicacio__IdCue__6A276FFF] FOREIGN KEY ([IdCuentaCobrar]) REFERENCES [ERP].[CuentaCobrar] ([ID]),
+    CONSTRAINT [FK__Aplicacio__IdMon__6C0FB871] FOREIGN KEY ([IdMoneda]) REFERENCES [Maestro].[Moneda] ([ID]),
+    CONSTRAINT [FK__Aplicacio__IdTip__6DF800E3] FOREIGN KEY ([IdTipoComprobante]) REFERENCES [PLE].[T10TipoComprobante] ([ID])
+);
+

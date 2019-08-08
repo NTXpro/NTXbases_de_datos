@@ -1,0 +1,6 @@
+﻿CREATE TABLE [Maestro].[Anio] (
+    [ID]     INT          IDENTITY (1, 1) NOT NULL,
+    [Nombre] VARCHAR (50) NULL,
+    CONSTRAINT [PK__Anio__2729E3C0C87DDF3C] PRIMARY KEY CLUSTERED ([ID] ASC)
+);
+

@@ -1,0 +1,26 @@
+﻿CREATE TABLE [ERP].[ComprobanteRetencion] (
+    [ID]              INT             IDENTITY (1, 1) NOT NULL,
+    [IdEmpresa]       INT             NOT NULL,
+    [IdCliente]       INT             NULL,
+    [Serie]           CHAR (4)        NULL,
+    [Documento]       VARCHAR (20)    NULL,
+    [FechaEmision]    DATETIME        NULL,
+    [TipoCambio]      DECIMAL (14, 5) NULL,
+    [ImportePago]     DECIMAL (14, 5) NULL,
+    [ImporteRetenido] DECIMAL (14, 5) NULL,
+    [FlagBorrador]    BIT             NOT NULL,
+    [Flag]            BIT             NOT NULL,
+    [UsuarioRegistro] VARCHAR (250)   NOT NULL,
+    [FechaRegistro]   DATETIME        NOT NULL,
+    [UsuarioModifico] VARCHAR (250)   NULL,
+    [FechaModifico]   DATETIME        NULL,
+    [UsuarioAnulo]    VARCHAR (250)   NULL,
+    [FechaAnulo]      DATETIME        NULL,
+    [FlagEmitido]     BIT             CONSTRAINT [DF_ComprobanteRetencion_Emitido] DEFAULT ((0)) NOT NULL,
+    [IdCuentaCobrar]  INT             NULL,
+    CONSTRAINT [PK_ComprobanteRetencion] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_ComprobanteRetencion_Cliente] FOREIGN KEY ([IdCliente]) REFERENCES [ERP].[Cliente] ([ID]),
+    CONSTRAINT [FK_ComprobanteRetencion_CuentaCobrar] FOREIGN KEY ([IdCuentaCobrar]) REFERENCES [ERP].[CuentaCobrar] ([ID]),
+    CONSTRAINT [FK_ComprobanteRetencion_Empresa] FOREIGN KEY ([IdEmpresa]) REFERENCES [ERP].[Empresa] ([ID])
+);
+

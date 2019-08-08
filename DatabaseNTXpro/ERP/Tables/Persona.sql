@@ -1,0 +1,27 @@
+﻿CREATE TABLE [ERP].[Persona] (
+    [ID]                  INT           IDENTITY (1, 1) NOT NULL,
+    [IdEntidad]           INT           NOT NULL,
+    [IdSexo]              INT           NOT NULL,
+    [ApellidoPaterno]     VARCHAR (150) NULL,
+    [ApellidoMaterno]     VARCHAR (150) NULL,
+    [Nombre]              VARCHAR (150) NULL,
+    [FechaNacimiento]     DATETIME      NULL,
+    [IdPais]              INT           NULL,
+    [IdEstadoCivil]       INT           NULL,
+    [IdNivelEducativo]    INT           NULL,
+    [IdCentroAsistencial] INT           NULL,
+    [UsuarioRegistro]     VARCHAR (250) NULL,
+    [FechaRegistro]       DATETIME      NULL,
+    [UsuarioModifico]     VARCHAR (250) NULL,
+    [FechaModificado]     DATETIME      NULL,
+    [UsuarioElimino]      VARCHAR (250) NULL,
+    [FechaEliminado]      DATETIME      NULL,
+    [UsuarioActivo]       VARCHAR (250) NULL,
+    [FechaActivacion]     DATETIME      NULL,
+    CONSTRAINT [PK__Persona__3214EC27A64DFE10] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK__Persona__IdEntid__0A9D95DB] FOREIGN KEY ([IdEntidad]) REFERENCES [ERP].[Entidad] ([ID]),
+    CONSTRAINT [FK__Persona__IdEstad__047C3EDF] FOREIGN KEY ([IdEstadoCivil]) REFERENCES [Maestro].[EstadoCivil] ([ID]),
+    CONSTRAINT [FK__Persona__IdPais__03881AA6] FOREIGN KEY ([IdPais]) REFERENCES [PLE].[T35Paises] ([ID]),
+    CONSTRAINT [FK__Persona__IdSexo__7849DB76] FOREIGN KEY ([IdSexo]) REFERENCES [Maestro].[Sexo] ([ID])
+);
+

@@ -1,0 +1,27 @@
+﻿CREATE TABLE [ERP].[Entidad] (
+    [ID]                          INT           IDENTITY (1, 1) NOT NULL,
+    [IdTipoPersona]               INT           NOT NULL,
+    [Nombre]                      VARCHAR (250) NULL,
+    [IdCondicionSunat]            INT           NULL,
+    [EstadoSunat]                 BIT           NULL,
+    [IdEstadoContribuyente]       INT           NULL,
+    [UsuarioRegistro]             VARCHAR (250) NULL,
+    [FechaRegistro]               DATETIME      NULL,
+    [UsuarioModifico]             VARCHAR (250) NULL,
+    [FechaModificado]             DATETIME      NULL,
+    [UsuarioElimino]              VARCHAR (250) NULL,
+    [FechaEliminado]              DATETIME      NULL,
+    [UsuarioActivo]               VARCHAR (250) NULL,
+    [FechaActivacion]             DATETIME      NULL,
+    [FlagBorrador]                BIT           NULL,
+    [Flag]                        BIT           NULL,
+    [AgenteRetencion]             INT           NULL,
+    [AgentePercepcion]            INT           NULL,
+    [BuenContribuyente]           INT           NULL,
+    [ResolucionBuenContribuyente] VARCHAR (100) NULL,
+    CONSTRAINT [PK__Entidad__7D66286810A3F35A] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK__Entidad__IdTipoP__0E240DFC] FOREIGN KEY ([IdTipoPersona]) REFERENCES [Maestro].[TipoPersona] ([ID]),
+    CONSTRAINT [FK_Entidad_CondicionSunat] FOREIGN KEY ([IdCondicionSunat]) REFERENCES [Maestro].[CondicionSunat] ([ID]),
+    CONSTRAINT [FK_Entidad_EstadoContribuyente] FOREIGN KEY ([IdEstadoContribuyente]) REFERENCES [Maestro].[EstadoContribuyente] ([ID])
+);
+

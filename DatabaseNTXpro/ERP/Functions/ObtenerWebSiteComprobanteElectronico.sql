@@ -1,0 +1,10 @@
+﻿CREATE FUNCTION [ERP].[ObtenerWebSiteComprobanteElectronico]()
+RETURNS VARCHAR(250)
+AS
+BEGIN
+
+DECLARE @WSCE VARCHAR(250) = (SELECT TOP 1 Valor FROM ERP.Parametro P WHERE Abreviatura = 'WSCE')
+
+RETURN @WSCE
+
+END

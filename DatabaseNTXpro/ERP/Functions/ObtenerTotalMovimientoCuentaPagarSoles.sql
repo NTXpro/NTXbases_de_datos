@@ -1,0 +1,26 @@
+﻿CREATE FUNCTION [ERP].[ObtenerTotalMovimientoCuentaPagarSoles](
+@IdCuentaPagar INT
+)
+RETURNS DECIMAL(15,2)
+AS
+BEGIN
+
+	DECLARE @Total DECIMAL(14,2);
+	DECLARE @TotalMovimientoCuentaPagarSoles DECIMAL(14,2);
+
+	SET @TotalMovimientoCuentaPagarSoles = (SELECT
+											SUM(CASE WHEN C.IdMoneda = 1 THEN 
+													MTD.Total 
+												WHEN C.IdMoneda = 2 THEN
+													MTD.Total * MT.TipoCambio
+												END)
+									 		FROM ERP.MovimientoTesoreriaDetalleCuentaPagar MDCP
+									 		INNER JOIN ERP.MovimientoTesoreriaDetalle MTD ON MTD.ID = MDCP.IdMovimientoTesoreriaDetalle
+									 		INNER JOIN ERP.MovimientoTesoreria MT ON MT.ID = MTD.IdMovimientoTesoreria
+											INNER JOIN ERP.Cuenta C ON C.ID = MT.IdCuenta
+											WHERE IdCuentaPagar = @IdCuentaPagar AND MT.Flag = 1 AND MT.FlagBorrador = 0 AND MTD.PagarCobrar = 'P');
+
+	SET @Total = ISNULL(@TotalMovimientoCuentaPagarSoles,0) 
+									 
+	RETURN @Total
+END

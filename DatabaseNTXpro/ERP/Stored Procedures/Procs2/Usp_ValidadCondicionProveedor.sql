@@ -1,0 +1,34 @@
+﻿CREATE PROC ERP.Usp_ValidadCondicionProveedor
+@IdProveedor INT
+AS 
+BEGIN
+		DECLARE @VARIABLE INT ;
+
+		/*OBTENEMOS LA ENTIDAD POR EL PROVEEDOR*/
+		DECLARE @ENTIDAD INT =(SELECT IdEntidad FROM ERP.Proveedor WHERE ID = @IdProveedor)
+		/***************************************/
+
+		
+		DECLARE @CONDICION INT = (SELECT IdCondicionSunat FROM ERP.Entidad WHERE ID = @ENTIDAD)
+		DECLARE @ESTADO INT = (SELECT IdEstadoContribuyente FROM ERP.Entidad WHERE ID = @ENTIDAD)
+
+
+		IF(@CONDICION = 2 AND @ESTADO = 12)
+			BEGIN
+				SET @VARIABLE = 1;
+			END
+		ELSE IF (@CONDICION != 2 AND @ESTADO = 12)
+			BEGIN
+				SET @VARIABLE = 2;
+			END
+		ELSE IF (@ESTADO != 12 AND @CONDICION = 2)
+			BEGIN
+				SET @VARIABLE = 3;
+			END
+		ELSE
+			BEGIN
+				SET @VARIABLE = -1;
+			END
+
+		SELECT @VARIABLE
+END

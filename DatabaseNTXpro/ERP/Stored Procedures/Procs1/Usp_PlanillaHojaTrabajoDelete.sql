@@ -1,0 +1,10 @@
+﻿CREATE PROCEDURE ERP.Usp_PlanillaHojaTrabajoDelete
+		@ID [bigint]
+AS
+	SET NOCOUNT ON
+	SET XACT_ABORT ON
+	
+	BEGIN TRANSACTION
+		DELETE FROM [ERP].[PlanillaHojaTrabajo]
+		WHERE ([ID] = @ID)
+	COMMIT

@@ -1,0 +1,6 @@
+﻿CREATE PROC ERP.Usp_Del_OrdenPago
+@ID INT
+AS
+BEGIN
+	DELETE FROM ERP.OrdenPago WHERE ID = @ID
+END

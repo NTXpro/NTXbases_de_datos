@@ -1,0 +1,27 @@
+﻿CREATE TABLE [ERP].[CuentaCobrar] (
+    [ID]                   INT             IDENTITY (1, 1) NOT NULL,
+    [IdEmpresa]            INT             NOT NULL,
+    [IdEntidad]            INT             NOT NULL,
+    [Fecha]                DATETIME        NULL,
+    [IdTipoComprobante]    INT             NULL,
+    [Serie]                VARCHAR (4)     NULL,
+    [Numero]               VARCHAR (18)    NULL,
+    [Total]                DECIMAL (14, 5) NULL,
+    [TipoCambio]           DECIMAL (14, 5) NULL,
+    [IdMoneda]             INT             NULL,
+    [IdCuentaCobrarOrigen] INT             NULL,
+    [Flag]                 BIT             NULL,
+    [FlagCancelo]          BIT             NULL,
+    [IdDebeHaber]          INT             NULL,
+    [FechaVencimiento]     DATETIME        NULL,
+    [FlagAnticipo]         BIT             NULL,
+    [FechaRecepcion]       DATETIME        NULL,
+    [IdPeriodo]            INT             NULL,
+    CONSTRAINT [PK__CuentaCo__3214EC27FF57AC18] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK__CuentaCob__IdCue__0EC3F7D1] FOREIGN KEY ([IdCuentaCobrarOrigen]) REFERENCES [Maestro].[CuentaCobrarOrigen] ([ID]),
+    CONSTRAINT [FK__CuentaCob__IdEmp__0FB81C0A] FOREIGN KEY ([IdEmpresa]) REFERENCES [ERP].[Empresa] ([ID]),
+    CONSTRAINT [FK__CuentaCob__IdEnt__10AC4043] FOREIGN KEY ([IdEntidad]) REFERENCES [ERP].[Entidad] ([ID]),
+    CONSTRAINT [FK__CuentaCob__IdMon__11A0647C] FOREIGN KEY ([IdMoneda]) REFERENCES [Maestro].[Moneda] ([ID]),
+    CONSTRAINT [FK__CuentaCob__IdTip__129488B5] FOREIGN KEY ([IdTipoComprobante]) REFERENCES [PLE].[T10TipoComprobante] ([ID])
+);
+

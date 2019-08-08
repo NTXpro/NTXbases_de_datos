@@ -1,0 +1,6 @@
+﻿CREATE PROC ERP.Usp_Del_AnticipoCompra
+@ID INT
+AS
+BEGIN
+	DELETE FROM ERP.AnticipoCompra WHERE ID = @ID
+END

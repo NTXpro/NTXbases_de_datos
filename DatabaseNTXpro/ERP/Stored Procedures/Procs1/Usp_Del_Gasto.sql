@@ -1,0 +1,8 @@
+﻿CREATE PROC ERP.Usp_Del_Gasto
+@ID INT
+AS
+BEGIN
+
+			DELETE ERP.Gasto WHERE ID = @ID
+
+END

@@ -1,0 +1,10 @@
+﻿
+CREATE PROC [ERP].[Usp_Upd_CajaChica_Cierre]
+@IdCajaChica	 INT
+AS
+BEGIN
+	SET QUERY_GOVERNOR_COST_LIMIT 36000
+	SET NOCOUNT ON;
+	UPDATE ERP.MovimientoCajaChica SET FlagCierre = 1, FechaCierre = DATEADD(HOUR, 3, GETDATE()) WHERE ID = @IdCajaChica
+	SET NOCOUNT OFF;
+END

@@ -1,0 +1,6 @@
+﻿CREATE PROC [ERP].[Usp_Upd_Vale_Anular]
+@ID INT
+AS
+BEGIN
+	UPDATE ERP.Vale SET IdValeEstado = 2 WHERE ID = @ID
+END

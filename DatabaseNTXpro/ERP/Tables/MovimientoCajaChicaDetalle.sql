@@ -1,0 +1,26 @@
+﻿CREATE TABLE [ERP].[MovimientoCajaChicaDetalle] (
+    [ID]                    BIGINT          IDENTITY (1, 1) NOT NULL,
+    [IdMovimientoCajaChica] INT             NULL,
+    [Orden]                 INT             NULL,
+    [IdPlanCuenta]          INT             NULL,
+    [IdProyecto]            INT             NULL,
+    [IdEntidad]             INT             NULL,
+    [Nombre]                VARCHAR (250)   NULL,
+    [IdTipoComprobante]     INT             NULL,
+    [Serie]                 VARCHAR (4)     NULL,
+    [Documento]             VARCHAR (20)    NULL,
+    [Total]                 DECIMAL (14, 5) NULL,
+    [IdDebeHaber]           INT             NULL,
+    [CodigoAuxiliar]        VARCHAR (50)    NULL,
+    [FlagTransferencia]     BIT             NULL,
+    [IdCuentaPagar]         INT             NULL,
+    [IdCuenta]              INT             NULL,
+    [IdMovimientoTesoreria] INT             NULL,
+    [Operacion]             CHAR (1)        NULL,
+    CONSTRAINT [PK__Movimien__3214EC2731418EDE] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_CajaChicaDetalle_CajaChica] FOREIGN KEY ([IdMovimientoCajaChica]) REFERENCES [ERP].[MovimientoCajaChica] ([ID]),
+    CONSTRAINT [FK_CajaChicaDetalle_Entidad] FOREIGN KEY ([IdEntidad]) REFERENCES [ERP].[Entidad] ([ID]),
+    CONSTRAINT [FK_CajaChicaDetalle_PlanCuenta] FOREIGN KEY ([IdPlanCuenta]) REFERENCES [ERP].[PlanCuenta] ([ID]),
+    CONSTRAINT [FK_CajaChicaDetalle_Proyecto] FOREIGN KEY ([IdProyecto]) REFERENCES [ERP].[Proyecto] ([ID])
+);
+

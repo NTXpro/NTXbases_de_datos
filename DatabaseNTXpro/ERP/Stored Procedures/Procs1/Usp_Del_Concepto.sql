@@ -1,0 +1,6 @@
+﻿CREATE PROC [ERP].[Usp_Del_Concepto]
+@ID INT
+AS
+BEGIN
+	DELETE FROM [ERP].[Concepto] WHERE ID = @ID
+END

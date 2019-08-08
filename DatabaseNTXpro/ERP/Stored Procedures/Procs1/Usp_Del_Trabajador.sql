@@ -1,0 +1,7 @@
+﻿
+CREATE PROC [ERP].[Usp_Del_Trabajador]
+@ID	INT
+AS
+BEGIN
+		DELETE FROM ERP.Trabajador WHERE ID=@ID
+END

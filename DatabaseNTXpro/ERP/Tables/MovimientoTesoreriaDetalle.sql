@@ -1,0 +1,26 @@
+﻿CREATE TABLE [ERP].[MovimientoTesoreriaDetalle] (
+    [ID]                    BIGINT          IDENTITY (1, 1) NOT NULL,
+    [IdMovimientoTesoreria] INT             NULL,
+    [Orden]                 INT             NULL,
+    [IdPlanCuenta]          INT             NULL,
+    [IdProyecto]            INT             NULL,
+    [IdEntidad]             INT             NULL,
+    [Nombre]                VARCHAR (250)   NULL,
+    [IdTipoComprobante]     INT             NULL,
+    [Serie]                 VARCHAR (4)     NULL,
+    [Documento]             VARCHAR (20)    NULL,
+    [Total]                 DECIMAL (14, 5) NULL,
+    [IdDebeHaber]           INT             NULL,
+    [CodigoAuxiliar]        VARCHAR (50)    NULL,
+    [IdOperacion]           INT             NULL,
+    [PagarCobrar]           CHAR (1)        NULL,
+    [Item]                  INT             NULL,
+    CONSTRAINT [PK__Movimien__3214EC2757A089A4] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK__Movimient__IdDeb__2B9540A9] FOREIGN KEY ([IdDebeHaber]) REFERENCES [Maestro].[DebeHaber] ([ID]),
+    CONSTRAINT [FK__Movimient__IdEnt__29ACF837] FOREIGN KEY ([IdEntidad]) REFERENCES [ERP].[Entidad] ([ID]),
+    CONSTRAINT [FK__Movimient__IdMov__25DC6753] FOREIGN KEY ([IdMovimientoTesoreria]) REFERENCES [ERP].[MovimientoTesoreria] ([ID]),
+    CONSTRAINT [FK__Movimient__IdPla__27C4AFC5] FOREIGN KEY ([IdPlanCuenta]) REFERENCES [ERP].[PlanCuenta] ([ID]),
+    CONSTRAINT [FK__Movimient__IdPro__28B8D3FE] FOREIGN KEY ([IdProyecto]) REFERENCES [ERP].[Proyecto] ([ID]),
+    CONSTRAINT [FK__Movimient__IdTip__2AA11C70] FOREIGN KEY ([IdTipoComprobante]) REFERENCES [PLE].[T10TipoComprobante] ([ID])
+);
+
