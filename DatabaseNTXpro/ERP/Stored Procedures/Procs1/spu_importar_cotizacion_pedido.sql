@@ -3,7 +3,7 @@
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
 -- =============================================
-CREATE PROCEDURE [ERP].[spu_importar_cotizacion_pedido]
+ALTER PROCEDURE [ERP].[spu_importar_cotizacion_pedido]
 	 @IdCotizacion INT,
      @IdPedido INT
 AS
@@ -13,6 +13,10 @@ DECLARE  @Fecha datetime
 SELECT @Fecha = c.Fecha FROM ERP.Comprobante c WHERE c.id = @IdCotizacion
 
 
+DECLARE  @seriep char(4)
+DECLARE @idempresap int 
+
+SELECT @seriep= p.Serie, @idempresap= p.IdEmpresa FROM ERP.Pedido p WHERE p.id =@IdPedido
 ------------------------------- INSERTAR DATOS DE CABECERA DE LA COTIZACION  ------------------------------------------
 UPDATE ERP.Pedido
 SET
@@ -28,7 +32,7 @@ SET
     ERP.Pedido.IdEstablecimiento = A.IdEstablecimiento, -- int
     ERP.Pedido.IdDetraccion = A.IdDetraccion, -- int
     --ERP.Pedido.Serie = A.Serie, -- char
-    --ERP.Pedido.Documento = A.Documento, -- varchar
+    ERP.Pedido.Documento =  (SELECT [ERP].[GenerarDocumentoPedido](@seriep,@IdPedido,@idempresap)), -- varchar
     --ERP.Pedido.SerieDocumento = A.SerieDocumento, -- varchar
   
     ERP.Pedido.DiasVencimiento = A.DiasVencimiento, -- int
@@ -139,15 +143,15 @@ CLOSE ProdInfo
 DEALLOCATE ProdInfo
 
 
------------------------------- CAMBIO EL ESTATUS DE LA FACTURA SI LA MISMA ES NUEVA  ------------------------------------------
+-------------------------------- CAMBIO EL ESTATUS DE LA FACTURA SI LA MISMA ES NUEVA  ------------------------------------------
 IF  EXISTS(SELECT * from  ERP.Pedido  c WHERE  c.id = @IdPedido  AND c.flagborrador = 1)
 BEGIN
 	UPDATE ERP.pedido  SET    ERP.Pedido.flagborrador = 0 WHERE  id =@IdPedido
 END
  
- UPDATE ERP.Cotizacion
- SET
-         ERP.Cotizacion.IdCotizacionEstado = 4 WHERE  ERP.Cotizacion.ID = @IdCotizacion
+ --UPDATE ERP.Cotizacion
+ --SET
+ --        ERP.Cotizacion.IdCotizacionEstado = 4 WHERE  ERP.Cotizacion.ID = @IdCotizacion
  SELECT 0
 
 END
