@@ -1,4 +1,5 @@
-﻿-- =============================================
+﻿
+-- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
@@ -17,6 +18,15 @@ DECLARE  @seriep char(4)
 DECLARE @idempresap int 
 
 SELECT @seriep= p.Serie, @idempresap= p.IdEmpresa FROM ERP.Pedido p WHERE p.id =@IdPedido
+DECLARE @Documentop varchar(30)
+SELECT @Documentop= (CASE WHEN p.Documento IS NULL THEN '' ELSE P.DOCUMENTO END)   FROM ERP.Pedido p WHERE p.ID = @IdPedido
+IF @Documentop = ''
+BEGIN
+SET @Documentop = (SELECT [ERP].[GenerarDocumentoPedido](@seriep,@IdPedido,@idempresap))
+END
+
+
+
 ------------------------------- INSERTAR DATOS DE CABECERA DE LA COTIZACION  ------------------------------------------
 UPDATE ERP.Pedido
 SET
@@ -32,7 +42,7 @@ SET
     ERP.Pedido.IdEstablecimiento = A.IdEstablecimiento, -- int
     ERP.Pedido.IdDetraccion = A.IdDetraccion, -- int
     --ERP.Pedido.Serie = A.Serie, -- char
-    ERP.Pedido.Documento =  (SELECT [ERP].[GenerarDocumentoPedido](@seriep,@IdPedido,@idempresap)), -- varchar
+    ERP.Pedido.Documento =  @Documentop, -- varchar
     --ERP.Pedido.SerieDocumento = A.SerieDocumento, -- varchar
   
     ERP.Pedido.DiasVencimiento = A.DiasVencimiento, -- int
@@ -149,9 +159,9 @@ BEGIN
 	UPDATE ERP.pedido  SET    ERP.Pedido.flagborrador = 0 WHERE  id =@IdPedido
 END
  
- --UPDATE ERP.Cotizacion
- --SET
- --        ERP.Cotizacion.IdCotizacionEstado = 4 WHERE  ERP.Cotizacion.ID = @IdCotizacion
+ UPDATE ERP.Cotizacion
+ SET
+         ERP.Cotizacion.IdCotizacionEstado = 4 WHERE  ERP.Cotizacion.ID = @IdCotizacion
  SELECT 0
 
 END
