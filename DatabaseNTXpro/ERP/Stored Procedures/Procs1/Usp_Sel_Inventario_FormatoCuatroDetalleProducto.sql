@@ -55,22 +55,39 @@ BEGIN
 		EN.Nombre AS NombreEntidad,
 		TOPE.Nombre AS NombreConcepto,
 		VD.Cantidad,
-		SUM(CASE WHEN TM.Abreviatura = 'I' THEN VD.Cantidad * VD.PrecioPromedio ELSE (VD.Cantidad * VD.PrecioUnitario) * -1 END) 
-		OVER(PARTITION BY VD.IdProducto ORDER BY V.Fecha, V.Orden) AS SaldoMonto,
+		--SUM(CASE WHEN TM.Abreviatura = 'I' THEN VD.Cantidad * VD.PrecioPromedio ELSE (VD.Cantidad * VD.PrecioUnitario) * -1 END) 
+		--OVER(PARTITION BY VD.IdProducto ORDER BY V.Fecha, V.Orden) AS SaldoMonto,
+		SUM((CASE WHEN TM.Abreviatura = 'I' THEN 1 ELSE  -1 END) * VD.Cantidad * 
+		(
+		CASE 
+			--WHEN  V.IdMoneda=@IdMoneda THEN VD.PrecioUnitario
+			WHEN  V.IdMoneda=2 AND @IdMoneda=1 THEN VD.PrecioUnitario * TCD.VentaSunat 
+			WHEN  V.IdMoneda=1 AND @IdMoneda=2 THEN VD.PrecioUnitario / TCD.VentaSunat 
+			ELSE  VD.PrecioUnitario
+		END 
+		)
+		) 
+		OVER(PARTITION BY VD.IdProducto, VD.NumeroLote ORDER BY V.Fecha, V.IdTipoMovimiento, V.Orden) AS SaldoMonto,
 		ISNULL((CASE WHEN TM.Abreviatura = 'I' THEN VD.Cantidad END), 0) AS Ingreso,
 		ISNULL((CASE WHEN TM.Abreviatura = 'S' THEN VD.Cantidad END), 0) AS Salida,
 		SUM(ISNULL(CASE WHEN TM.Abreviatura = 'I' THEN VD.Cantidad ELSE VD.Cantidad * -1 END, 0)) OVER(PARTITION BY VD.IdProducto ORDER BY V.Fecha, V.Orden) as SaldoCantidad,
+		--CASE 
+			--WHEN V.IdMoneda = 1 THEN
+				--CASE 
+					--WHEN @IdMoneda = 1 THEN VD.PrecioUnitario
+					--ELSE VD.PrecioUnitario / TCD.VentaSunat
+				--END
+			--ELSE 
+				--CASE 
+				--	WHEN @IdMoneda = 1 THEN VD.PrecioUnitario * TCD.VentaSunat
+				--	ELSE VD.PrecioUnitario
+				--END
+		--END AS PrecioUnitario
 		CASE 
-			WHEN V.IdMoneda = 1 THEN
-				CASE 
-					WHEN @IdMoneda = 1 THEN VD.PrecioUnitario
-					ELSE VD.PrecioUnitario / TCD.VentaSunat
-				END
-			ELSE 
-				CASE 
-					WHEN @IdMoneda = 1 THEN VD.PrecioUnitario * TCD.VentaSunat
-					ELSE VD.PrecioUnitario
-				END
+			--WHEN  V.IdMoneda=@IdMoneda THEN VD.PrecioUnitario
+			WHEN  V.IdMoneda=2 AND @IdMoneda=1 THEN VD.PrecioUnitario * TCD.VentaSunat 
+			WHEN  V.IdMoneda=1 AND @IdMoneda=2 THEN VD.PrecioUnitario / TCD.VentaSunat 
+			ELSE  VD.PrecioUnitario
 		END AS PrecioUnitario
 		FROM ERP.ValeDetalle VD
 		INNER JOIN ERP.Vale V ON VD.IdVale = V.ID

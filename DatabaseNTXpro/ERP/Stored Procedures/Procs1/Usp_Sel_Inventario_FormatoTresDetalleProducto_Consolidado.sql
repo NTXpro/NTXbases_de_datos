@@ -58,10 +58,10 @@ BEGIN
 		TOPE.Nombre AS NombreConcepto,
 		VD.Cantidad,
 		SUM(CASE WHEN TM.Abreviatura = 'I' THEN VD.Cantidad * VD.PrecioPromedio ELSE (VD.Cantidad * VD.PrecioUnitario) * -1 END) 
-		OVER(PARTITION BY E.ID, A.ID, VD.IdProducto ORDER BY V.Fecha, V.Orden) AS SaldoMonto,
+		OVER(PARTITION BY V.IdAlmacen,E.ID, A.ID, VD.IdProducto ORDER BY V.Fecha, V.Orden) AS SaldoMonto,
 		ISNULL((CASE WHEN TM.Abreviatura = 'I' THEN VD.Cantidad END), 0) AS Ingreso,
 		ISNULL((CASE WHEN TM.Abreviatura = 'S' THEN VD.Cantidad END), 0) AS Salida,
-		SUM(ISNULL(CASE WHEN TM.Abreviatura = 'I' THEN VD.Cantidad ELSE VD.Cantidad * -1 END, 0)) OVER(PARTITION BY E.ID, A.ID, VD.IdProducto ORDER BY V.Fecha, V.Orden) as SaldoCantidad,
+		SUM(ISNULL(CASE WHEN TM.Abreviatura = 'I' THEN VD.Cantidad ELSE VD.Cantidad * -1 END, 0)) OVER(PARTITION BY V.IdAlmacen,E.ID, A.ID, VD.IdProducto ORDER BY V.Fecha, V.Orden) as SaldoCantidad,
 		CASE 
 			WHEN V.IdMoneda = 1 THEN
 				CASE 
